@@ -46,10 +46,10 @@ var findDuplicate = function (nums) {
  * @return {number}
  */
 var findDuplicate2 = function (nums) {
-    let start = 0;
+    let start = 1;
     let end = Math.ceil(nums.length / 2)
-    let tail = nums.length
-    while ((end - start) > 50) {
+    let tail = nums.length - 1
+    while (end - start > 3) {
         let k = 0;
         for (let j = 0; j < nums.length; j++) {
             if (start <= nums[j] && nums[j] <= end) {
@@ -58,7 +58,7 @@ var findDuplicate2 = function (nums) {
         }
         if (k > (end - start + 1)) {
             tail = end
-            end = start + Math.ceil((end - start) / 2)
+            end = start + Math.floor((end - start) / 2)
         } else {
             start = end
             end = tail
@@ -66,25 +66,56 @@ var findDuplicate2 = function (nums) {
     }
     // 当二分查找到常数范围后，使用扫描法
     let ast = new Map()
-    for (let i = start; i < tail; i++) {
-        let cun = ast.get(nums[i]);
-        if (cun) {
-            ast.set(nums[i], cun + 1)
-        } else {
-            ast.set(nums[i], 1)
+    for (let i = start; i <= tail; i++) {
+        for (let j = 0; j < nums.length; j++) {
+            if (nums[j] === i) {
+                let t = ast.get(i)
+                if (t) {
+                    return i
+                } else {
+                    ast.set(i, 1)
+                }
+            }
         }
+
     }
-    let rt = null;
-    Array.from(ast.keys()).forEach(n => {
-        if (ast.get(n) > 1) {
-            rt = n
-        }
-    })
-    return rt
 };
 
-let an = [3, 1, 4, 2, 5, 1]
-let a2 = [1, 2, 8, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+function runAll(fn, dataList, msg = '') {
+    let start = Date.now();
+    dataList.forEach(({param, res, index}) => {
+        let r = fn(param)
+        if (r === res) {
+            // nothing
+        } else {
+            console.log(`${msg} err, res:${r},ex:${res}`);
+        }
+    })
+    console.log(`${msg} done, spent:${Date.now() - start}`);
+}
 
-console.log(findDuplicate(a2));
-console.log(findDuplicate2(a2));
+function testAll() {
+    let list = new Array(50).fill(1).map(n => {
+        let len = Math.ceil(Math.random() * 50000);
+        let baseArr = new Array(len).fill(1).map((_, ind) => ind + 1).sort(() => {
+            return Math.random() - 0.5
+        })
+        let seed = Math.floor(Math.random() * (len - 1)) + 1;
+        let index = Math.floor(Math.random() * len);
+        let a1 = baseArr.slice(0, index);
+        let a2 = baseArr.slice(index);
+        a1.push(seed)
+        let brr = a1.concat(a2)
+        return {param: brr, res: seed, index: index}
+    })
+    let baseArr = new Array(50000).fill(1).map((_, ind) => ind + 1)
+    let arr5 = Array.from(baseArr)
+    arr5.push(5)
+    runAll(findDuplicate, list, 'a')
+    runAll(findDuplicate2, list, 'b')
+}
+
+testAll()
+// let arr = [1, 2, 3, 4, 1]
+// console.log(findDuplicate(arr));
+// console.log(findDuplicate2(arr));
