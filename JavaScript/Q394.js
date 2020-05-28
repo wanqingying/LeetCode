@@ -1,3 +1,4 @@
+const {testAll} = require('./base')
 /*
 
 394. 字符串解码
@@ -18,9 +19,40 @@ s = "2[abc]3[cd]ef", 返回 "abcabccdcdcdef".
 
 
 /**
+ * 使用数组模拟栈结构
  * @param {string} s
  * @return {string}
  */
 var decodeString = function (s) {
-
+    // 使用两个栈，一个记录字符串，一个记录上一个闭合括号的位置
+    let stack = []
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === ']') {
+            for (let j = stack.length - 1; j >= 0; j--) {
+                if (stack[j] === '[') {
+                    let countStart = j - 1;
+                    while (!isNaN(stack[countStart] * 1)) {
+                        countStart -= 1
+                    }
+                    countStart += 1;
+                    let count = stack.slice(countStart, j).join('') * 1;
+                    let sta = stack.slice(j + 1).join('')
+                    let str = sta.repeat(count)
+                    stack = stack.slice(0, countStart)
+                    stack.push(str)
+                    break;
+                }
+            }
+        } else {
+            stack.push(s[i])
+        }
+    }
+    return stack.join('')
 };
+
+let params = [
+    {param: "3[w]", result: 'www'},
+    {param: "3[a]2[bc]", result: "aaabcbc"},
+    {param: "3[a]2[buc]", result: "aaabcbc"}
+]
+testAll(decodeString, params)
