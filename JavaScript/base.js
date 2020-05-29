@@ -1,4 +1,4 @@
-function testAll(fn, params) {
+function testAll(fn, params)
     let start = Date.now();
     params.forEach(({param, result}, index) => {
         let res = fn(param);
