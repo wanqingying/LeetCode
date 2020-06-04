@@ -24,5 +24,5 @@
  * @return {number}
  */
 var rob = function (nums) {
-    [A, B, C, D]
+    [A, B, C, D, E, F]
 };
