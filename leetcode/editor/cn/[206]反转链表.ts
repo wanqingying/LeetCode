@@ -56,5 +56,6 @@
 
 function reverseList(head: ListNode | null): ListNode | null {
 
+    return  null;
 };
 //leetcode submit region end(Prohibit modification and deletion)
