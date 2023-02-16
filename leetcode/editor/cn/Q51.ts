@@ -48,10 +48,14 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 function solveNQueens(n: number): string[][] {
+    // 最多有n个Q,
+    // 每行最多一个，每列最多一个
+    // ray_rx[i]表示第i列放置的下标
+    // ray_ry[i]表示第i行放置的下标
     interface Ray {
-        // 右上 x+y
+        // 右上 x+y 是固定值
         ray_rt: number[];
-        // 右下 x-y+n
+        // 右下 x-y+n 是固定值
         ray_rd: number[];
         // 列
         ray_rx: number[];
@@ -73,6 +77,8 @@ function solveNQueens(n: number): string[][] {
             return { ray_rt: [], ray_rx: [], ray_ry: [], ray_rd: [] };
         }
     }
+
+    // 判断
     function push(x: number, y: number, r: Ray) {
         if (r.ray_rt[x + y]) {
             return false;
