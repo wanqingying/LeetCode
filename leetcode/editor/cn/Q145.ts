@@ -53,26 +53,55 @@
  *     }
  * }
  */
-
+interface TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+}
 function postorderTraversal(root: TreeNode | null): number[] {
   const result: number[] = [];
-
-  const stack = [root];
-
-
-  function toLeft(k: TreeNode) {
-    while (k) {
-      stack.push(k);
-      k = k.left;
+  const stack: any[] = [root];
+  while (stack.length) {
+    const ind = stack.pop();
+    if (!ind) continue;
+    if (typeof ind === "number") {
+      result.push(ind);
+    } else if (!ind?.right && !ind?.left) {
+      result.push(ind.val);
+    } else {
+      stack.push(ind.val);
+      if (Boolean(ind?.right)) stack.push(ind.right);
+      if (Boolean(ind?.left)) stack.push(ind.left);
     }
   }
 
-  let n = stack.shift();
+  return result;
+}
 
-  while (n) {
+console.log(
+  postorderTraversal({
+    val: 1,
+    left: null,
+    right: { val: 2, left: { val: 3, left: null, right: null }, right: null },
+  })
+);
 
+function postorderTraversal2(root: TreeNode | null): number[] {
+  interface TreeNode {
+    val: number;
+    left: TreeNode | null;
+    right: TreeNode | null;
   }
 
+  const result: number[] = [];
+
+  function traverse(node: TreeNode | null) {
+    if (!node) return;
+    if (node.left) traverse(node.left);
+    if (node.right) traverse(node.right);
+    result.push(node.val);
+  }
+  traverse(root);
   return result;
 }
 //leetcode submit region end(Prohibit modification and deletion)

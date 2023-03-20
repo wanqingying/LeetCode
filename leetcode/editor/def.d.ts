@@ -1,8 +1,8 @@
-declare class ListNode {
-  val: number;
-  next: ListNode | null;
-  constructor(val?: number, next?: ListNode | null);
-}
+// declare class ListNode {
+//   val: number;
+//   next: ListNode | null;
+//   constructor(val?: number, next?: ListNode | null);
+// }
 
 declare class TreeNode {
   val: number;
