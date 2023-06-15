@@ -49,6 +49,9 @@
 
 //leetcode submit region begin(Prohibit modification and deletion)
 function countDigitOne(n: number): number {
+  /**
+   * 分别计算个位、十位、百位...上1出现的次数
+   */
   if (n === 0) return 0;
   let res = 0;
   let k = 1;
@@ -60,6 +63,7 @@ function countDigitOne(n: number): number {
       res += d * k;
     }
     if (b === 1) {
+      // 类似213 十位上的1个数为 2*10+4  [10,19] [110,119] [210,213]
       res += d * k + (n % k) + 1;
     }
     if (b >= 2) {
