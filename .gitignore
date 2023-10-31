@@ -1,9 +1,12 @@
 .idea
-node_modules
+node_modules/**
 node_modules/prettier
 src
 JavaScript/leetcode/editor/cn/doc
 JavaScript/leetcode/editor/cn/doc
+leet_java/leetcode/editor/cn/doc
 *.js
 **/*.js
 leetcode/editor/cn/doc
+logs
+out
