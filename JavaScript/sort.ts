@@ -1,3 +1,4 @@
+// 冒泡排序
 function sort_1(arr: number[]) {
   // 冒泡排序
   for (let i = 0; i < arr.length; i++) {
